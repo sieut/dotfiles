@@ -86,6 +86,8 @@ noremap <C-j> 40j
 " 256 color schemes
 set term=screen-256color
 
+nnoremap <silent> <C-p> :NERDTreeToggle<CR>
+
 " Movement like w but ignore punctuations
 " Map it to Shift W
 function! JumpToNextWord()
