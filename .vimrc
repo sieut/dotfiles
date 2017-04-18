@@ -34,6 +34,10 @@ Plug 'airblade/vim-gitgutter'
 " Move, Rename file
 Plug 'tpope/vim-eunuch'
 
+" TagBar
+Plug 'majutsushi/tagbar'
+nmap <silent> <F2> :TagbarToggle<CR>
+
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
@@ -50,6 +54,8 @@ call plug#end()
 set rnu
 " Autoread if file is changed outside of Vim
 set autoread
+" Set tags file
+set tags=tags;
 " Git gutter config
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_enabled = 1
