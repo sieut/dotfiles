@@ -99,6 +99,9 @@ noremap <C-h> ^
 noremap <C-k> 40k
 noremap <C-j> 40j
 
+" Map leader-space to insert space in normal mode
+nnoremap <leader><Space> i<Space><Esc>
+
 " 256 color schemes
 set term=screen-256color
 
