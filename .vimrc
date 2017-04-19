@@ -19,6 +19,16 @@ Plug 'junegunn/vim-easy-align'
 " Javascript syntax
 Plug 'pangloss/vim-javascript'
 
+" Multiple cursors
+Plug 'terryma/vim-multiple-cursors'
+let g:multi_cursor_use_default_mapping = 0
+let g:multi_cursor_next_key = '<C-d>'
+let g:multi_cursor_prev_key = '<C-s>'
+let g:multi_cursor_skip_key = '<C-x>'
+let g:multi_cursor_quit_key = '<ESC>'
+let g:multi_cursor_exit_from_visual_mode = 0
+let g:multi_cursor_exit_from_insert_mode = 0
+
 " Auto mkdir
 Plug 'travisjeffery/vim-auto-mkdir'
 
@@ -92,10 +102,8 @@ noremap <C-j> 40j
 " 256 color schemes
 set term=screen-256color
 
-nnoremap <silent> <C-p> :NERDTreeToggle<CR>
-
 " Movement like w but ignore punctuations
-" Map it to Shift W
+" Map it to W
 function! JumpToNextWord()
     normal w
     while strpart(getline('.'), col('.')-1, 1) !~ '\w'
