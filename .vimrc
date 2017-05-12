@@ -94,6 +94,9 @@ autocmd BufWritePre * %s/\s\+$//e
 " Enter to insert newline in normal mode
 noremap <CR> o<Esc>
 
+" <leader>; to insert ; at end of line
+nnoremap <leader>; A;<Esc>
+
 " Timeout for meta combinations
 set timeout ttimeoutlen=50
 
