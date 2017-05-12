@@ -19,6 +19,9 @@ Plug 'junegunn/vim-easy-align'
 " Javascript syntax
 Plug 'pangloss/vim-javascript'
 
+" Typescript syntax
+Plug 'leafgarland/typescript-vim'
+
 " Multiple cursors
 Plug 'terryma/vim-multiple-cursors'
 let g:multi_cursor_use_default_mapping = 0
