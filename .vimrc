@@ -47,6 +47,9 @@ Plug 'airblade/vim-gitgutter'
 " Move, Rename file
 Plug 'tpope/vim-eunuch'
 
+" Vimwiki
+Plug 'vimwiki/vimwiki'
+
 " TagBar
 Plug 'majutsushi/tagbar'
 nmap <silent> <F2> :TagbarToggle<CR>
