@@ -123,3 +123,13 @@ function! JumpToNextWord()
     endwhile
 endfunction
 noremap <silent> <S-w> :call JumpToNextWord()<CR>
+
+" No newline at EOF
+set binary
+set noeol
+
+" Map :W to :w, so fucking annoying
+command! W w
+
+" Set .tsx filetype to be javascript
+au BufRead,BufNewFile *.tsx set filetype=typescript
