@@ -19,6 +19,10 @@ Plug 'junegunn/vim-easy-align'
 " Javascript syntax
 Plug 'pangloss/vim-javascript'
 
+" JSX syntac
+Plug 'mxw/vim-jsx'
+let g:jsx_ext_required = 0
+
 " Typescript syntax
 Plug 'leafgarland/typescript-vim'
 
@@ -46,6 +50,9 @@ Plug 'airblade/vim-gitgutter'
 
 " Move, Rename file
 Plug 'tpope/vim-eunuch'
+
+" Surround
+Plug 'tpope/vim-surround'
 
 " Vimwiki
 Plug 'vimwiki/vimwiki'
@@ -130,6 +137,8 @@ set noeol
 
 " Map :W to :w, so fucking annoying
 command! W w
+" Same with :Q
+command Q q
 
 " Set .tsx filetype to be javascript
 au BufRead,BufNewFile *.tsx set filetype=typescript
