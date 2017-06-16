@@ -24,7 +24,7 @@ Plug 'mxw/vim-jsx'
 let g:jsx_ext_required = 0
 
 " Typescript syntax
-Plug 'leafgarland/typescript-vim'
+Plug 'HerringtonDarkholme/yats.vim'
 
 " Multiple cursors
 Plug 'terryma/vim-multiple-cursors'
