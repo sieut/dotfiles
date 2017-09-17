@@ -26,6 +26,12 @@ let g:jsx_ext_required = 0
 " Typescript syntax
 Plug 'HerringtonDarkholme/yats.vim'
 
+" Typescript autocomplete
+Plug 'Quramy/tsuquyomi'
+
+" Rust
+Plug 'rust-lang/rust.vim'
+
 " Multiple cursors
 Plug 'terryma/vim-multiple-cursors'
 let g:multi_cursor_use_default_mapping = 0
@@ -41,12 +47,15 @@ Plug 'travisjeffery/vim-auto-mkdir'
 
 " Autocomplete
 Plug 'https://github.com/Valloric/YouCompleteMe.git'
+let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 
 " Auto brackets
 Plug 'https://github.com/jiangmiao/auto-pairs.git'
 
 " Git Gutter
 Plug 'airblade/vim-gitgutter'
+nnoremap ]h :GitGutterNextHunk<CR>
+nnoremap [h :GitGutterPrevHunk<CR>
 
 " Move, Rename file
 Plug 'tpope/vim-eunuch'
@@ -57,15 +66,24 @@ Plug 'tpope/vim-surround'
 " Vimwiki
 Plug 'vimwiki/vimwiki'
 
+" Vimnotes
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
+let g:notes_directories=['~/notes/']
+
 " TagBar
 Plug 'majutsushi/tagbar'
 nmap <silent> <F2> :TagbarToggle<CR>
+
+" Indexed Search
+Plug 'henrik/vim-indexed-search'
 
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " NERDtree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+let g:NERDTreeWinPos = "left"
 
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -79,6 +97,10 @@ set rnu
 set autoread
 " Set tags file
 set tags=tags;
+" Show cmd
+set showcmd
+" Better linebreak
+set showbreak=↪
 " Git gutter config
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_enabled = 1
@@ -111,12 +133,18 @@ set timeout ttimeoutlen=50
 noremap <C-l> $
 noremap <C-h> ^
 
-" CTRL-k and CTRL-j to move up/down by 40 lines
-noremap <C-k> 40k
-noremap <C-j> 40j
+" CTRL-k and CTRL-j to move up/down by a page
+noremap <C-k> Hzz
+noremap <C-j> Lzz
 
 " Map leader-space to insert space in normal mode
 nnoremap <leader><Space> i<Space><Esc>
+
+" ; to :
+noremap ; :
+
+" Map leader-wo to window only
+noremap <leader>wo <C-w>o
 
 " 256 color schemes
 set term=screen-256color
@@ -135,6 +163,8 @@ noremap <silent> <S-w> :call JumpToNextWord()<CR>
 set binary
 set noeol
 
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+
 " Map :W to :w, so fucking annoying
 command! W w
 " Same with :Q
@@ -142,3 +172,39 @@ command Q q
 
 " Set .tsx filetype to be javascript
 au BufRead,BufNewFile *.tsx set filetype=typescript
+
+" Colorscheme
+set t_Co=16
+let g:solarized_termcolors=16
+set background=light
+colorscheme solarized
+
+" Lightline
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'active': {
+      \   'left': [ ['mode', 'paste'],
+      \             ['fugitive', 'readonly', 'filename', 'modified'] ],
+      \   'right': [ [ 'lineinfo' ], ['percent'] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \ },
+      \ 'separator': { 'left': ' ', 'right': ' ' },
+      \ 'subseparator': { 'left': ' ', 'right': ' ' }
+      \ }
+
+let g:ctrlp_user_command = {
+    \   'types': {
+    \       1: ['.git', 'cd %s && git ls-files --cached --exclude-standard --others'],
+    \       2: ['.hg', 'hg --cwd %s locate -I .'],
+    \   },
+    \   'fallback': 'find %s -type f'
+    \ }

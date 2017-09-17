@@ -4,19 +4,24 @@
 # Path to your oh-my-zsh installation.
   export ZSH=/home/sieut/.oh-my-zsh
 
+export PATH="$HOME/.cargo/bin:$HOME/anaconda2/bin:/usr/local/cuda/bin:$PATH"
+# export PATH="$HOME/.cargo/bin:/usr/local/cuda/bin:/usr/bin:$PATH"
+
 if command -v tmux>/dev/null; then
   [[ ! $TERM =~ screen  ]] && [ -z $TMUX  ] && exec tmux
 fi
 
-eval $(thefuck --alias)
+[[ "$TERM" == "xterm"  ]] && export TERM=xterm-256color
 
 # Turn of Ctrl-S freezing the terminal
 stty -ixon
 
+xmodmap $HOME/.Xmodmap
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="pygmalion"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -35,7 +40,7 @@ ZSH_THEME="robbyrussell"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+export DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
@@ -94,5 +99,10 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias config='/usr/bin/git --git-dir=/home/sieut/.cfg/ --work-tree=/home/sieut'
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+alias vrec='vim -w $HOME/work/vim-watcher/data/$(date +%s).log'
+
+alias fd='git diff $(git rev-parse --abbrev-ref HEAD) origin/$(git rev-parse --abbrev-ref HEAD) | grep "diff --git"'
+alias doculus-full='gulp --cwd data-sync-common data-sync-common && gulp --cwd app-common app-common && gulp --cwd app-server app-server && gulp --cwd app-client "app-client (script only)"'
+alias doculus-common='gulp --cwd app-common app-common && gulp --cwd app-server app-server && gulp --cwd app-client "app-client (script only)"'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
