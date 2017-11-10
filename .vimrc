@@ -52,6 +52,8 @@ let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 " Auto brackets
 Plug 'https://github.com/jiangmiao/auto-pairs.git'
 
+Plug 'eshion/vim-sync'
+
 " Git Gutter
 Plug 'airblade/vim-gitgutter'
 nnoremap ]h :GitGutterNextHunk<CR>
@@ -77,6 +79,9 @@ nmap <silent> <F2> :TagbarToggle<CR>
 
 " Indexed Search
 Plug 'henrik/vim-indexed-search'
+
+" Easy Motion
+Plug 'easymotion/vim-easymotion'
 
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
