@@ -5,7 +5,7 @@
   export ZSH=/home/sieut/.oh-my-zsh
 
 # export PATH="$HOME/.cargo/bin:$HOME/anaconda2/bin:/usr/local/cuda/bin:/usr/local/go/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$HOME/godot/:/usr/local/cuda/bin:/usr/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$HOME/godot/:$HOME/exercism/:$HOME/cool/:/usr/local/cuda/bin:/usr/bin:$PATH"
 export WINEARCH=win32
 
 if command -v tmux>/dev/null; then
@@ -66,7 +66,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git npm)
+plugins=(git cargo colorize dotenv)
 
 source $ZSH/oh-my-zsh.sh
 

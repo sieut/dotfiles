@@ -170,6 +170,9 @@ set noeol
 
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 
+set list
+set listchars=tab:>-
+
 " Map :W to :w, so fucking annoying
 command! W w
 " Same with :Q
@@ -177,6 +180,12 @@ command Q q
 
 " Set .tsx filetype to be javascript
 au BufRead,BufNewFile *.tsx set filetype=typescript
+
+au BufRead,BufNewFile *.cl set filetype=cool
+
+" Tags file config for Rust
+autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
+autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
 
 " Colorscheme
 set t_Co=16
