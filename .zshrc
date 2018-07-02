@@ -2,11 +2,13 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/sieut/.oh-my-zsh
+export ZSH=/home/sieut/.oh-my-zsh
 
-# export PATH="$HOME/.cargo/bin:$HOME/anaconda2/bin:/usr/local/cuda/bin:/usr/local/go/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$HOME/godot/:$HOME/exercism/:$HOME/cool/:/usr/local/cuda/bin:/usr/bin:$PATH"
+export PATH="$HOME/.cargo/bin:/usr/local/cuda/bin:/usr/bin:$PATH"
 export WINEARCH=win32
+
+export LC_ALL=en_US.UTF-8
+export LC_TYPE=en_US.UTF-8
 
 if command -v tmux>/dev/null; then
   [[ ! $TERM =~ screen  ]] && [ -z $TMUX  ] && exec tmux
@@ -98,12 +100,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias config='/usr/bin/git --git-dir=/home/sieut/.cfg/ --work-tree=/home/sieut'
-
-alias vrec='vim -w $HOME/work/vim-watcher/data/$(date +%s).log'
-
-# alias fd='git diff $(git rev-parse --abbrev-ref HEAD) origin/$(git rev-parse --abbrev-ref HEAD) | grep "diff --git"'
-alias doculus-full='gulp --cwd data-sync-common data-sync-common && gulp --cwd app-common app-common && gulp --cwd app-server app-server && gulp --cwd app-client "app-client (script only)"'
-alias doculus-common='gulp --cwd app-common app-common && gulp --cwd app-server app-server && gulp --cwd app-client "app-client (script only)"'
+alias config='/usr/bin/git --git-dir=/home/sieut/dotfiles/ --work-tree=/home/sieut'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
