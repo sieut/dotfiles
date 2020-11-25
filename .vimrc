@@ -1,11 +1,11 @@
+" Leader to ,
+let mapleader=","
+
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
 
 " Easy align
 Plug 'junegunn/vim-easy-align'
-
-" Javascript syntax
-Plug 'pangloss/vim-javascript'
 
 " Rust
 Plug 'rust-lang/rust.vim'
@@ -14,8 +14,28 @@ Plug 'rust-lang/rust.vim'
 Plug 'travisjeffery/vim-auto-mkdir'
 
 " Autocomplete
-Plug 'https://github.com/Valloric/YouCompleteMe.git'
-let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+" Plug 'https://github.com/Valloric/YouCompleteMe.git'
+" let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+
+" Coc
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+nmap <silent> gd <Plug>(coc-definition)
 
 " Auto brackets
 Plug 'https://github.com/jiangmiao/auto-pairs.git'
@@ -39,6 +59,9 @@ Plug 'tpope/vim-dispatch'
 " Vim fugitive
 Plug 'tpope/vim-fugitive'
 
+" Github support for fugitive
+Plug 'tpope/vim-rhubarb'
+
 " Vim commentary
 Plug 'tpope/vim-commentary'
 
@@ -52,30 +75,25 @@ Plug 'henrik/vim-indexed-search'
 " Easy Motion
 Plug 'easymotion/vim-easymotion'
 
-" UltiSnips
-Plug 'SirVer/ultisnips'
-inoremap <C-q> <C-R>=UltiSnips#ExpandSnippet()<CR>
-
 " NERDtree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 let g:NERDTreeWinPos = "left"
 map <leader>nn :NERDTreeToggle<cr>
 
-" Fuzzy finder
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
 " Ack
 Plug 'mileszs/ack.vim'
 let g:ack_use_dispatch=1
-let g:ack_use_cword_for_empty_search = 0
+let g:ack_use_cword_for_empty_search = 1
 if executable('ag')
   let g:ackprg = 'ag --vimgrep --smart-case'
 endif
-map <leader>g :Ack
+map <leader>g :Ack<Space>
 
 " Command-T
 Plug 'wincent/command-t'
-let g:commandTFileScanner='git'
+let g:CommandTFileScanner='git'
+let g:CommandTGitIncludeUntracked=1
+let g:CommandTTraverseSCM='pwd'
 
 " BufExplorer
 Plug 'corntrace/bufexplorer'
@@ -107,14 +125,25 @@ let g:lightline = {
       \ 'subseparator': { 'left': ' ', 'right': ' ' }
       \ }
 
+" Pep8 Indent
+Plug 'Vimjas/vim-python-pep8-indent'
+
+" JSDoc
+Plug 'https://github.com/heavenshell/vim-jsdoc'
+
+" JS Syntax
+Plug 'https://github.com/pangloss/vim-javascript'
+let g:javascript_plugin_jsdoc = 1
+Plug 'mxw/vim-jsx'
+let g:jsx_ext_required = 1
+Plug 'peitalin/vim-jsx-typescript'
+
 " Initialize plugin system
 call plug#end()
 
-" Leader to ,
-let mapleader=","
-
 " ===== Search settings ==== "
 " Smart case
+set ignorecase
 set smartcase
 " Highlight search results
 set hlsearch
@@ -178,6 +207,10 @@ noremap ; :
 " Map leader-wo to window only
 noremap <leader>wo <C-w>o
 
+" Map res and vert res
+nnoremap <leader>r :res<Space>
+nnoremap <leader>vr :vert res<Space>
+
 " No newline at EOF
 set binary
 set noeol
@@ -188,10 +221,21 @@ set list
 set diffopt+=vertical
 set listchars=tab:>-
 
+" Set swap files dir to ~/.vim/swp
+set directory^=$HOME/.vim/swp//
+
 " Map :W to :w, so fucking annoying
 command! W w
 " Same with :Q
 command Q q
+
+" Map ,z to :terminal
+nnoremap <leader>z :terminal<CR>
+
+" Autoread files changed on disk
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 " Tags file config for Rust
 autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
@@ -202,3 +246,14 @@ set t_Co=16
 let g:solarized_termcolors=16
 set background=light
 colorscheme solarized
+
+" Folding
+set foldmethod=indent
+set foldnestmax=2
+set foldlevelstart=1
+set foldenable
+
+if !has('python') && !has('python3')
+    echo 'You need vim+python for this script'
+    finish
+endif
