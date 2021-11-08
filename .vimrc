@@ -166,8 +166,6 @@ try
 catch
 endtry
 
-" Relative line number
-set rnu
 " Autoread if file is changed outside of Vim
 set autoread
 " Set 7 lines to the cursor - when moving vertically using j/k
