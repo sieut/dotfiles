@@ -65,6 +65,9 @@ Plug 'tpope/vim-rhubarb'
 " Vim commentary
 Plug 'tpope/vim-commentary'
 
+" Vim sleuth
+Plug 'tpope/vim-sleuth'
+
 " TagBar
 Plug 'majutsushi/tagbar'
 nmap <silent> <F2> :TagbarToggle<CR>
@@ -95,9 +98,22 @@ let g:CommandTFileScanner='git'
 let g:CommandTGitIncludeUntracked=1
 let g:CommandTTraverseSCM='pwd'
 
-" BufExplorer
-Plug 'corntrace/bufexplorer'
-map <leader>o :BufExplorer<cr>
+" FZF
+Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
+Plug 'junegunn/fzf.vim'
+
+nnoremap <leader>o :Buffer<CR>
+
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--ansi', '--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+nnoremap <leader>g :RG<CR>
 
 " Syntastic
 Plug 'scrooloose/syntastic'
@@ -213,8 +229,6 @@ nnoremap <leader>vr :vert res<Space>
 set binary
 set noeol
 
-set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
-
 set list
 set diffopt+=vertical
 set listchars=tab:>-
@@ -242,7 +256,7 @@ autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . 
 " Colorscheme
 set t_Co=16
 let g:solarized_termcolors=16
-set background=light
+set background=dark
 colorscheme solarized
 
 " Folding
